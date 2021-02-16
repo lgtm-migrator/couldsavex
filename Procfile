@@ -1,2 +1,1 @@
-web: npm start
-api: npm run startbackend
+web: npm run startbackend
