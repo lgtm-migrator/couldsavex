@@ -2,10 +2,9 @@ const { LossesDB } = require("./dbUtils");
 const { uniswap } = require("./graph");
 const { setIntervalAsync } = require("set-interval-async/fixed");
 const fetch = require("fetch-retry")(require("isomorphic-fetch"));
+const { ethers } = require("ethers");
 
 let lastTimeStamp = Date.now() / 10 ** 3;
-
-const toWei = 1 * 10 ** 18;
 
 exports.lossCheck = async (CheckInterval) => {
   setIntervalAsync(async () => {
@@ -14,11 +13,16 @@ exports.lossCheck = async (CheckInterval) => {
     uniswaps.forEach(async (swap) => {
       try {
         if (swap.timestamp > lastTimeStamp && swap.amount0In > 0) {
-          let exchangeOutcome = swap.amount1Out * toWei;
-          let exchangeIncome = swap.amount0In * toWei;
+          let exchangeIncome = swap.amount0In;
+          let exchangeOutcome = swap.amount1Out;
+          let oneInchOutcome;
 
           oneInchQuery = await fetch(
-            `https://api.1inch.exchange/v2.0/quote?fromTokenAddress=${swap.pair.token0.id}&toTokenAddress=${swap.pair.token1.id}&amount=${exchangeIncome}`,
+            `https://api.1inch.exchange/v2.0/quote?fromTokenAddress=${
+              swap.pair.token0.id
+            }&toTokenAddress=${
+              swap.pair.token1.id
+            }&amount=${ethers.utils.parseEther(exchangeIncome)}`,
             {
               method: "GET",
               retryOn: [1024],
@@ -29,7 +33,18 @@ exports.lossCheck = async (CheckInterval) => {
             .then(async (res) => await res.json())
             .catch((err) => console.log(err));
 
-          if (exchangeOutcome && exchangeOutcome < oneInchQuery.toTokenAmount)
+          oneInchOutcome = ethers.utils.formatEther(
+            ethers.BigNumber.from(oneInchQuery.toTokenAmount)
+          );
+
+          let OutcomeDiff = oneInchOutcome - exchangeOutcome;
+          let outcomeDiffPercent = (OutcomeDiff / exchangeOutcome) * 100;
+
+          if (
+            exchangeOutcome &&
+            exchangeOutcome < oneInchOutcome &&
+            outcomeDiffPercent > 1
+          )
             await LossesDB.create({
               swapExchange: "uniswap",
               transactionid: swap.transaction.id,
@@ -49,12 +64,13 @@ exports.lossCheck = async (CheckInterval) => {
                 .then(async (res) => await res.json())
                 .catch((error) => console.log(error))
                 .then((jsonres) => jsonres.result.from),
-              fromToken: swap.pair.token0.id,
-              toToken: swap.pair.token1.id,
+              fromToken: swap.pair.token0.symbol,
+              toToken: swap.pair.token1.symbol,
               exchangeIncome: exchangeIncome,
               exchangeOutcome: exchangeOutcome,
-              oneInchOutcome: oneInchQuery.toTokenAmount,
-              OutcomeDiff: oneInchQuery.toTokenAmount - exchangeOutcome,
+              oneInchOutcome: oneInchOutcome,
+              OutcomeDiff: OutcomeDiff,
+              OutcomeDiffPercent: outcomeDiffPercent.toFixed(2),
               timestamp: swap.timestamp,
             });
         }

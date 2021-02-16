@@ -13,9 +13,11 @@ exports.uniswap = async () => {
           pair {
             token0 {
               id
+              symbol
             }
             token1 {
               id
+              symbol
             }
           }
             amount0In

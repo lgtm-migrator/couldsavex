@@ -1,2 +1,2 @@
-web: npm start
-worker: npm run startbackend
+web: PORT=3000 npm run start
+api: PORT=8000 npm run startbackend

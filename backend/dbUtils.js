@@ -12,6 +12,7 @@ exports.LossesDB = sequelize.define("Losses", {
   exchangeOutcome: DataTypes.FLOAT,
   oneInchOutcome: DataTypes.FLOAT,
   OutcomeDiff: DataTypes.FLOAT,
+  OutcomeDiffPercent: DataTypes.FLOAT,
   timestamp: DataTypes.INTEGER,
 });
 
