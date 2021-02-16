@@ -1,10 +1,13 @@
-const LossesDB = require("./dbUtils");
+const { LossesDB } = require("./dbUtils");
 
 exports.Routing = async () => {
   /* Express */
   const express = require("express");
   const app = express();
   app.use(express.static("public"));
+
+  /* db */
+  LossesDB.sync({ force: true });
 
   // define the routes
   app.get("/api/losses", function (req, res) {
@@ -13,7 +16,9 @@ exports.Routing = async () => {
     LossesDB.findAll({
       order: [["timestamp", "desc"]],
       limit: queryLimit,
-    }).then((queryres) => res.send(queryres));
+    })
+      .then((queryres) => res.send({ result: queryres }))
+      .catch((err) => console.log(err));
   });
 
   // start the server listening for requests
