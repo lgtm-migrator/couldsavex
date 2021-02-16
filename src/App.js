@@ -1,25 +1,17 @@
 import logo from "./logo.svg";
 import "./App.css";
+import { Paper, Button } from "@material-ui/core";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-          <br></br>
-          Thanks to Vercel!
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Paper
+        style={{
+          width: "100vw",
+          minHeight: "100vh",
+          backgroundColor: "black",
+        }}
+      ></Paper>
     </div>
   );
 }

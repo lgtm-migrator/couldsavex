@@ -7,7 +7,7 @@ exports.Routing = async () => {
   app.use(express.static("public"));
 
   /* db */
-  LossesDB.sync({ force: true });
+  LossesDB.sync({ alter: true });
 
   // define the routes
   app.get("/api/losses", function (req, res) {

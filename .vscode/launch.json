@@ -7,7 +7,7 @@
     {
       "name": "Launch via NPM",
       "request": "launch",
-      "runtimeArgs": ["run", "startbackend"],
+      "runtimeArgs": ["start"],
       "runtimeExecutable": "npm",
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node"
