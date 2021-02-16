@@ -44,7 +44,8 @@ exports.lossCheck = async (CheckInterval) => {
             if (
               exchangeOutcome &&
               exchangeOutcome < oneInchOutcome &&
-              outcomeDiffPercent > 1
+              outcomeDiffPercent > 1 &&
+              outcomeDiffPercent < 50
             )
               await LossesDB.create({
                 swapExchange: "uniswap",
