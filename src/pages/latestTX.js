@@ -7,7 +7,9 @@ function LatestTX() {
   const [transactions, setTransactions] = useState(null);
 
   var fetchTransactions = async () => {
-    let transc = await axios.get("http://localhost:3000/api/losses?limit=10");
+    let transc = await axios.get(
+      "https://couldsavex.herokuapp.com/api/losses?limit=10"
+    );
     setTransactions(transc.data.result);
   };
 
@@ -40,7 +42,8 @@ function LatestTX() {
                 </span>
                 at Transaction:{" "}
                 <a href={"https://etherscan.io/tx/" + element.transactionid}>
-                  {element.sender.slice(0, 3) + element.sender.slice(18, 20)}
+                  {element.transactionid.slice(0, 3) +
+                    element.transactionid.slice(18, 20)}
                 </a>{" "}
                 By Using <a href={"https://1inch.exchange"}>1Inch</a> !
                 <Divider></Divider>

@@ -1,10 +1,12 @@
 const { LossesDB } = require("./dbUtils");
+const cors = require("cors");
 
 exports.Routing = async () => {
   /* Express */
   const express = require("express");
   const app = express();
   app.use(express.static("public"));
+  app.use(cors());
 
   /* db */
   LossesDB.sync({ alter: true });
