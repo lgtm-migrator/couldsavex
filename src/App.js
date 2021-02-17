@@ -16,6 +16,28 @@ function App() {
     else if (newValue == 1) setPageState(<LossCalc></LossCalc>);
   };
 
+  const header = (
+    <Paper
+      style={{
+        backgroundColor: "lightgray",
+        width: "100vw",
+        height: 30,
+        display: "flex",
+        flexDirection: "row",
+        flexGrow: "initial",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <p>1Inch</p>
+      <img
+        src="https://avatars.githubusercontent.com/u/43341157?s=200&v=4"
+        style={{ width: 30 }}
+      ></img>
+      <p>Profit</p>
+    </Paper>
+  );
+
   return (
     <div>
       <Paper
@@ -26,6 +48,7 @@ function App() {
           textAlign: "center",
         }}
       >
+        {header}
         <Paper
           style={{
             width: "40vw",
@@ -34,6 +57,9 @@ function App() {
             top: 120,
             left: 600,
             backgroundColor: "lightgray",
+            maxHeight: 200,
+            overflow: "auto",
+            overflowX: "hidden",
           }}
         >
           <Paper square>
