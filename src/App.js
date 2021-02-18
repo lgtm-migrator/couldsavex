@@ -50,11 +50,11 @@ function App() {
       {header}
       <Paper
         style={{
-          width: "50vw",
+          width: "70%",
           height: "80vh",
           backgroundColor: "lightgray",
           overflow: "auto",
-          margin: "5% 25%",
+          margin: "5% 15%",
           overflowX: "hidden",
         }}
       >
@@ -75,7 +75,7 @@ function App() {
             display: "flex",
             flexDirection: "row",
             position: "relative",
-            left: "25%",
+            left: "30%",
           }}
         >
           {PageState}

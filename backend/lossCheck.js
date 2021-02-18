@@ -1,8 +1,8 @@
-const { LossesDB } = require("./dbUtils");
 const { uniswap } = require("./graph");
 const { setIntervalAsync } = require("set-interval-async/fixed");
 const fetch = require("fetch-retry")(require("isomorphic-fetch"));
 const { ethers } = require("ethers");
+const { execIntegrations } = require("./integrations");
 
 let lastTimeStamp = Date.now() / 10 ** 3;
 
@@ -45,12 +45,12 @@ exports.lossCheck = async (CheckInterval) => {
               exchangeOutcome &&
               exchangeOutcome < oneInchOutcome &&
               outcomeDiffPercent > 1 &&
-              outcomeDiffPercent < 50
+              outcomeDiffPercent < 200
             )
-              await LossesDB.create({
-                swapExchange: "uniswap",
-                transactionid: swap.transaction.id,
-                sender: await fetch(
+              execIntegrations(
+                "uniswap",
+                swap.transaction.id,
+                await fetch(
                   `https://api.etherscan.io/api?module=proxy&action=eth_getTransactionByHash&txhash=${swap.transaction.id}&apikey=${process.env.ETHERSCAN_API_KEY}`,
                   {
                     method: "GET",
@@ -66,15 +66,15 @@ exports.lossCheck = async (CheckInterval) => {
                   .then(async (res) => await res.json())
                   .catch((error) => console.log(error))
                   .then((jsonres) => jsonres.result.from),
-                fromToken: swap.pair.token0.symbol,
-                toToken: swap.pair.token1.symbol,
-                exchangeIncome: exchangeIncome,
-                exchangeOutcome: exchangeOutcome,
-                oneInchOutcome: oneInchOutcome,
-                OutcomeDiff: OutcomeDiff,
-                OutcomeDiffPercent: outcomeDiffPercent.toFixed(2),
-                timestamp: swap.timestamp,
-              });
+                swap.pair.token0.symbol,
+                swap.pair.token1.symbol,
+                exchangeIncome,
+                exchangeOutcome,
+                oneInchOutcome,
+                OutcomeDiff,
+                outcomeDiffPercent.toFixed(2),
+                swap.timestamp
+              );
           }
         }
       } catch (error) {
