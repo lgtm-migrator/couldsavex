@@ -1,4 +1,5 @@
 const { LossesDB } = require("./dbUtils");
+const { LossQuote } = require("./lossCalc");
 const cors = require("cors");
 
 exports.Routing = async () => {
@@ -20,6 +21,16 @@ exports.Routing = async () => {
       limit: queryLimit,
     })
       .then((queryres) => res.send({ result: queryres }))
+      .catch((err) => console.log(err));
+  });
+
+  app.get("/api/calcloss", async function (req, res) {
+    const fromToken = req.query.fromToken;
+    const toToken = req.query.toToken;
+    const amount = req.query.amount;
+
+    await LossQuote(fromToken, toToken, amount)
+      .then((queryRes) => res.send({ result: { swaploss: queryRes } }))
       .catch((err) => console.log(err));
   });
 
