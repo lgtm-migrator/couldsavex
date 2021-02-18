@@ -11,7 +11,6 @@ function App() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    debugger;
     if (newValue == 0) setPageState(<LatestTX></LatestTX>);
     else if (newValue == 1) setPageState(<LossCalc></LossCalc>);
   };

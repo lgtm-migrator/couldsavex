@@ -1,4 +1,5 @@
 import { Select, MenuItem, TextField, Button } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
 import axios from "axios";
 import { useState } from "react";
 
@@ -7,19 +8,33 @@ function LossCalc() {
   const [fromToken, setFromToken] = useState(null);
   const [toToken, setToToken] = useState(null);
   const [amount, setAmount] = useState(null);
+  const [loss, setLoss] = useState(null);
 
   var fetchTokens = async () => {
     let toks = await axios.get(
       "https://api.coingecko.com/api/v3/exchanges/uniswap/tickers"
     );
-    debugger;
     setTokens(toks.data.tickers);
   };
 
   if (!tokens) fetchTokens();
 
+  var swapLoss = async () => {
+    let toks = await axios.get(
+      `https://couldsavex.herokuapp.com/api/calcloss?fromToken=${fromToken}&toToken=${toToken}&amount=${amount}`
+    );
+    debugger;
+    setLoss(toks.data.result.swaploss);
+  };
+
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+      }}
+    >
       <p style={{ fontWeight: "bold" }}>Source Token:</p>
       <Select
         value={fromToken}
@@ -29,7 +44,7 @@ function LossCalc() {
         {tokens &&
           tokens.map((tok) => {
             return (
-              <MenuItem value={tok.base} key={tok.base}>
+              <MenuItem value={tok.base.toLowerCase()} key={tok.base}>
                 {tok.coin_id}
               </MenuItem>
             );
@@ -44,7 +59,7 @@ function LossCalc() {
         {tokens &&
           tokens.map((tok) => {
             return (
-              <MenuItem value={tok.base} key={tok.base}>
+              <MenuItem value={tok.base.toLowerCase()} key={tok.base}>
                 {tok.coin_id}
               </MenuItem>
             );
@@ -62,10 +77,19 @@ function LossCalc() {
       <Button
         variant="contained"
         style={{ backgroundColor: "darkgray", position: "relative", top: 10 }}
-        onClick={() => alert("work In Progress!")}
+        onClick={async () => {
+          await swapLoss();
+        }}
       >
         Calculate the Loss!
       </Button>
+      {loss ? (
+        <p style={{ padding: "50px 0px" }}>
+          You can save{" "}
+          <span style={{ color: "green" }}>{loss.toFixed(2)}%</span> By Using{" "}
+          <a href={"https://1inch.exchange"}>1Inch</a> !
+        </p>
+      ) : null}
     </div>
   );
 }
