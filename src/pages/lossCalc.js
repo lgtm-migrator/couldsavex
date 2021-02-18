@@ -33,6 +33,7 @@ function LossCalc() {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        margin: "0px 100px",
       }}
     >
       <p style={{ fontWeight: "bold" }}>Source Token:</p>

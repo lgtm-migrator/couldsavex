@@ -38,55 +38,50 @@ function App() {
   );
 
   return (
-    <div>
+    <Paper
+      style={{
+        maxWidth: "100vw",
+        maxHeight: "100vh",
+        backgroundColor: "#282c34",
+        textAlign: "center",
+        overflowX: "hidden",
+      }}
+    >
+      {header}
       <Paper
         style={{
-          width: "100vw",
-          minHeight: "100vh",
-          backgroundColor: "#282c34",
-          textAlign: "center",
+          width: "50vw",
+          height: "80vh",
+          backgroundColor: "lightgray",
+          overflow: "auto",
+          margin: "5% 25%",
+          overflowX: "hidden",
         }}
       >
-        {header}
-        <Paper
+        <Paper square>
+          <Tabs
+            value={value}
+            indicatorColor="primary"
+            textColor="primary"
+            onChange={handleChange}
+            centered
+          >
+            <Tab label="Latest Transactions" />
+            <Tab label="Loss Calculator" />
+          </Tabs>
+        </Paper>
+        <div
           style={{
-            width: "40vw",
-            minHeight: "70vh",
+            display: "flex",
+            flexDirection: "row",
             position: "relative",
-            top: 120,
-            left: 600,
-            backgroundColor: "lightgray",
-            maxHeight: 200,
-            overflow: "auto",
-            overflowX: "hidden",
+            left: "25%",
           }}
         >
-          <Paper square>
-            <Tabs
-              value={value}
-              indicatorColor="primary"
-              textColor="primary"
-              onChange={handleChange}
-              centered
-            >
-              <Tab label="Latest Transactions" />
-              <Tab label="Loss Calculator" />
-            </Tabs>
-          </Paper>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              position: "relative",
-              top: 0,
-              left: 180,
-            }}
-          >
-            {PageState}
-          </div>
-        </Paper>
+          {PageState}
+        </div>
       </Paper>
-    </div>
+    </Paper>
   );
 }
 
