@@ -1,12 +1,12 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
-  /*dialectOptions: {
+  dialectOptions: {
     ssl: {
       require: true,
       rejectUnauthorized: false,
     },
-  },*/
+  },
 });
 
 const { setIntervalAsync } = require("set-interval-async/fixed");
