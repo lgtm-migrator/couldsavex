@@ -1,7 +1,12 @@
 require("dotenv").config();
 const { Routing } = require("./routes");
 const { lossCheck } = require("./lossCheck");
-const { rotateDB } = require("./dbUtils");
+const { rotateDB, Databases } = require("./dbUtils");
+
+// Databases
+Databases.forEach(async (db) => {
+  await db.sync({ alter: true });
+});
 
 // Backend
 Routing();

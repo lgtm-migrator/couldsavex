@@ -1,19 +1,19 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
-  dialectOptions: {
+  /*dialectOptions: {
     ssl: {
       require: true,
       rejectUnauthorized: false,
     },
-  },
+  },*/
 });
 
 const { setIntervalAsync } = require("set-interval-async/fixed");
 
 exports.LossesDB = sequelize.define("Losses", {
   swapExchange: DataTypes.TEXT,
-  transactionid: DataTypes.TEXT,
+  transactionid: { type: DataTypes.TEXT, unique: true },
   sender: { type: DataTypes.TEXT, defaultValue: "0x" },
   fromToken: DataTypes.TEXT,
   toToken: DataTypes.TEXT,
@@ -24,6 +24,13 @@ exports.LossesDB = sequelize.define("Losses", {
   OutcomeDiffPercent: DataTypes.FLOAT,
   timestamp: DataTypes.INTEGER,
 });
+
+exports.ArbSubsDB = sequelize.define("ArbSubs", {
+  chatID: { type: DataTypes.FLOAT, unique: true },
+  minArbPercent: DataTypes.FLOAT,
+});
+
+exports.Databases = [this.LossesDB, this.ArbSubsDB];
 
 exports.rotateDB = (keepAmount, rotateinterval) => {
   setIntervalAsync(async () => {

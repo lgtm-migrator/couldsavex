@@ -9,9 +9,6 @@ exports.Routing = async () => {
   app.use(express.static("public"));
   app.use(cors());
 
-  /* db */
-  LossesDB.sync({ alter: true });
-
   // define the routes
   app.get("/api/losses", function (req, res) {
     const queryLimit = req.query.limit || 10;
