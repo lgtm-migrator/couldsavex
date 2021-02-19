@@ -1,9 +1,5 @@
-const TelegramBot = require("node-telegram-bot-api");
 const { LossesDB } = require("./dbUtils");
-const TelegramInstance = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, {
-  polling: false,
-});
-const oneInchChannelChatId = -1001243077083;
+const { telegramInstance, oneInchChannelChatId } = require("./telegrambot");
 
 exports.execIntegrations = async (
   swapExchange,
@@ -32,7 +28,7 @@ exports.execIntegrations = async (
     timestamp: timestamp,
   });
 
-  await TelegramInstance.sendMessage(
+  await telegramInstance.sendMessage(
     oneInchChannelChatId,
     `
     <a href="${"https://etherscan.io/address/" + sender}">${
