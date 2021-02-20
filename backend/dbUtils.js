@@ -1,5 +1,5 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+exports.dbconn = new Sequelize(process.env.DATABASE_URL, {
   dialect: "postgres",
   dialectOptions: parseInt(process.env.SSL)
     ? {
@@ -13,7 +13,7 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 
 const { setIntervalAsync } = require("set-interval-async/fixed");
 
-exports.LossesDB = sequelize.define("Losses", {
+exports.LossesDB = this.dbconn.define("Losses", {
   swapExchange: DataTypes.TEXT,
   transactionid: { type: DataTypes.TEXT, unique: true },
   sender: { type: DataTypes.TEXT, defaultValue: "0x" },
@@ -27,7 +27,7 @@ exports.LossesDB = sequelize.define("Losses", {
   timestamp: DataTypes.INTEGER,
 });
 
-exports.ArbSubsDB = sequelize.define("ArbSubs", {
+exports.ArbSubsDB = this.dbconn.define("ArbSubs", {
   chatID: { type: DataTypes.FLOAT, unique: true },
   minArbPercent: DataTypes.FLOAT,
 });
