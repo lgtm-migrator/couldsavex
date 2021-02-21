@@ -9,16 +9,16 @@ Features:
 - Latest Transactions of DEXes and Losses Compared to 1Inch Routing.
 - Comparing Swap Profit if use 1Inch.
 
-![alt text](https://github.com/FIREFOXCYBER/couldsavex/blob/main/etc/screenshots/latestTransactions.png "Website Overview")
-![alt text](https://github.com/FIREFOXCYBER/couldsavex/blob/main/etc/screenshots/losscalc.png "Website Overview")
+<img src="https://github.com/FIREFOXCYBER/couldsavex/blob/main/etc/screenshots/latestTransactions.png" width="1000" height="500" />
+<img src="https://github.com/FIREFOXCYBER/couldsavex/blob/main/etc/screenshots/losscalc.png" width="1000" height="500" />
 
 > **Telegram**
 
 - Bot with Getting Quote & Subscription for Arbitrage Opportunities
 - Channel with Latest Transactions and Transaction Losses compared to 1Inch!
 
-![alt text](https://github.com/FIREFOXCYBER/couldsavex/blob/main/etc/screenshots/telbot.png "Website Overview")
-![alt text](https://github.com/FIREFOXCYBER/couldsavex/blob/main/etc/screenshots/telchannel.png "Website Overview")
+<img src="https://github.com/FIREFOXCYBER/couldsavex/blob/main/etc/screenshots/telbot.png" width="500" height="1000" />
+<img src="https://github.com/FIREFOXCYBER/couldsavex/blob/main/etc/screenshots/telchannel.png" width="500" height="1000" />
 
 > **API**
 
