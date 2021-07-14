@@ -15,7 +15,7 @@
     "fetch-retry": "^4.1.0",
     "http-proxy-middleware": "^1.0.6",
     "isomorphic-fetch": "^3.0.0",
-    "node-telegram-bot-api": "^0.51.0",
+    "node-telegram-bot-api": "^0.53.0",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "react": "^17.0.1",
